@@ -23,6 +23,8 @@ package org.firstinspires.ftc.teamcode.Jonathan;
 
 import android.util.Size;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -63,6 +65,10 @@ import java.util.List;
 @TeleOp(name = "Concept: Vision Color-Locator", group = "Concept")
 public class VisionSampleSlurper extends LinearOpMode
 {
+    private static final double xAxisTotal = 320;
+    private static final double yAxisTotal = 240;
+    private static final int fluctuationOfSampleLocation = 30;
+
     @Override
     public void runOpMode()
     {
@@ -111,7 +117,7 @@ public class VisionSampleSlurper extends LinearOpMode
                 .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
                 .setRoi(ImageRegion.asUnityCenterCoordinates(-0.5, 0.5, 0.5, -0.5))  // search central 1/4 of camera view
                 .setDrawContours(true)                        // Show contours on the Stream Preview
-                .setBlurSize(5)                               // Smooth the transitions between different colors in image
+                .setBlurSize(5)                               // Smooth the transitions between different colors in the image
                 .build();
 
         /*
@@ -182,19 +188,28 @@ public class VisionSampleSlurper extends LinearOpMode
                 telemetry.addLine(String.format("%5d  %4.2f   %5.2f  (%3d,%3d)",
                           b.getContourArea(), b.getDensity(), b.getAspectRatio(), (int) boxFit.center.x, (int) boxFit.center.y));
             }
-
+//jonathan's tweaking rn help me
             for(ColorBlobLocatorProcessor.Blob b : blobs)
             {
-                if (b.getContourArea() <= 500) {
-                    continue;
-                } else if (b.getBoxFit().center.x >= 100) {
+                if (inCenter(b) && b.getContourArea() >= 500) {
                     ClawController claw = new ClawController();
                     claw.closeClaw();
+                    telemetry.addLine("claw closed");
+                } else {
+                    telemetry.addLine("claw open");
                 }
             }
 
             telemetry.update();
             sleep(50);
         }
+    }
+
+    private boolean inCenter(@NonNull ColorBlobLocatorProcessor.Blob b) {
+        boolean fromLeft = b.getBoxFit().center.x >= xAxisTotal / 2 - fluctuationOfSampleLocation;
+        boolean fromRight = b.getBoxFit().center.x <= xAxisTotal / 2 + fluctuationOfSampleLocation;
+        boolean fromTop = b.getBoxFit().center.y >= yAxisTotal / 2 - fluctuationOfSampleLocation;
+        boolean fromBottom = b.getBoxFit().center.y <= yAxisTotal / 2 + fluctuationOfSampleLocation;
+        return fromLeft && fromRight && fromTop && fromBottom;
     }
 }
