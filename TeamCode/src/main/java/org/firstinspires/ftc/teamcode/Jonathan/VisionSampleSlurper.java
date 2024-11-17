@@ -188,7 +188,7 @@ public class VisionSampleSlurper extends LinearOpMode
                 telemetry.addLine(String.format("%5d  %4.2f   %5.2f  (%3d,%3d)",
                           b.getContourArea(), b.getDensity(), b.getAspectRatio(), (int) boxFit.center.x, (int) boxFit.center.y));
             }
-//jonathan's tweaking rn help me
+
             for(ColorBlobLocatorProcessor.Blob b : blobs)
             {
                 if (inCenter(b) && b.getContourArea() >= 500) {
