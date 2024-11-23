@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Jonathan;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class MecanumWheelsController {
@@ -18,8 +19,8 @@ public class MecanumWheelsController {
 
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void horizontalPower(float power) {
         leftFront.setPower(-power);
@@ -38,5 +39,12 @@ public class MecanumWheelsController {
         leftBack.setPower(power);
         rightFront.setPower(-power);
         rightBack.setPower(-power);
+    }
+
+    public void applyPower(float lJX, float lJY, float rJX) {
+        leftFront.setPower(lJY - lJX - rJX);
+        leftBack.setPower(lJY + lJX - rJX);
+        rightFront.setPower(lJY + lJX + rJX);
+        rightBack.setPower(lJY - lJX + rJX);
     }
 }

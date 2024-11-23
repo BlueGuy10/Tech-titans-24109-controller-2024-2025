@@ -10,7 +10,7 @@ public class ArmController {
 
     ArmController (HardwareMap hardwareMap) {
         pitch = hardwareMap.get(DcMotor.class, "PitchMotor");
-        extension = hardwareMap.get(DcMotor.class, "YawMotor");
+        extension = hardwareMap.get(DcMotor.class, "ExtensionMotor");
 
         pitch.setDirection(DcMotorSimple.Direction.FORWARD);
         extension.setDirection(DcMotorSimple.Direction.FORWARD);
