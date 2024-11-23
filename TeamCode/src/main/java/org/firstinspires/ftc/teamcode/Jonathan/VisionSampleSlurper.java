@@ -72,8 +72,7 @@ public class VisionSampleSlurper extends LinearOpMode
     @Override
     public void runOpMode()
     {
-        ClawController claw = new ClawController();
-        claw.initializeClaw(hardwareMap);
+        ClawController claw = new ClawController(hardwareMap);
         /* Build a "Color Locator" vision processor based on the ColorBlobLocatorProcessor class.
          * - Specify the color range you are looking for.  You can use a predefined color, or create you own color range
          *     .setTargetColorRange(ColorRange.BLUE)                      // use a predefined color match

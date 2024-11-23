@@ -7,17 +7,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class RobotController extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        ClawController claw = new ClawController();
-        claw.initializeClaw(hardwareMap);
-
-        MecanumWheelsController wheels = new MecanumWheelsController();
+        ClawController claw = new ClawController(hardwareMap);
+        MecanumWheelsController wheels = new MecanumWheelsController(hardwareMap);
+        ArmController arm = new ArmController(hardwareMap);
 
         while (opModeIsActive()) {
-            oneDriver(claw, wheels);
+            oneDriver(claw, wheels, arm);
         }
     }
 
-    private void oneDriver(ClawController claw, MecanumWheelsController wheels) {
+    private void oneDriver(ClawController claw, MecanumWheelsController wheels, ArmController arm) {
         if (gamepad1.right_bumper) {
             claw.closeClaw();
         } else if (gamepad1.left_bumper) {
@@ -25,7 +24,10 @@ public class RobotController extends LinearOpMode {
         }
 
         wheels.horizontalPower(gamepad1.left_stick_x);
-        wheels.verticalPower(gamepad1.right_stick_y);
-        wheels.turn(gamepad1.left_trigger - gamepad1.right_trigger);
+        wheels.verticalPower(gamepad1.left_stick_y);
+        wheels.turn(gamepad1.right_stick_x);
+
+        arm.pitchPower(gamepad1.right_stick_y);
+        arm.extensionPower(gamepad1.left_trigger - gamepad1.right_trigger);
     }
 }
