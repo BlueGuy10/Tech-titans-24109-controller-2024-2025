@@ -12,7 +12,7 @@ public class ClawController {
     private Servo servo;
     
     ClawController (@NonNull HardwareMap hardwareMap) {
-        servo = hardwareMap.get(Servo.class, "Claw servo");
+        servo = hardwareMap.get(Servo.class, "Claw");
         servo.setDirection(Servo.Direction.FORWARD);
         servo.setPosition(servoOpen);
     }
