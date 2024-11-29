@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "1 driver control", group = "Driver control")
-//@Disabled
+@Disabled
 public class RobotController extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,7 +27,7 @@ public class RobotController extends LinearOpMode {
 
         wheels.applyPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-        arm.pitchPower(gamepad2.right_stick_y);
-        arm.extensionPower(gamepad2.left_trigger - gamepad2.right_trigger);
+        arm.pitchPower(Math.round(gamepad2.left_stick_y * 30));
+        arm.extensionPower(Math.round(gamepad2.right_stick_y * 30));
     }
 }

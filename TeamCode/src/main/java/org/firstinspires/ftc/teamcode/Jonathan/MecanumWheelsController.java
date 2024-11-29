@@ -11,7 +11,7 @@ public class MecanumWheelsController {
     private DcMotor rightFront;
     private DcMotor rightBack;
 
-    MecanumWheelsController (HardwareMap hardwareMap) {
+    public MecanumWheelsController (HardwareMap hardwareMap) {
         leftFront = hardwareMap.get(DcMotor.class, "LeftFront");
         leftBack = hardwareMap.get(DcMotor.class, "LeftBack");
         rightFront = hardwareMap.get(DcMotor.class, "RightFront");

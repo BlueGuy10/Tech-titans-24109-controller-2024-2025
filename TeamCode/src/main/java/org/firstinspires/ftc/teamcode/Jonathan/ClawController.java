@@ -10,11 +10,11 @@ public class ClawController {
     private static final double servoClosed = 0;
     
     private Servo servo;
-    
-    ClawController (@NonNull HardwareMap hardwareMap) {
+
+    public ClawController(@NonNull HardwareMap hardwareMap) {
         servo = hardwareMap.get(Servo.class, "Claw");
         servo.setDirection(Servo.Direction.FORWARD);
-        servo.setPosition(servoOpen);
+        servo.setPosition(servoClosed);
     }
 
     public void closeClaw() {
