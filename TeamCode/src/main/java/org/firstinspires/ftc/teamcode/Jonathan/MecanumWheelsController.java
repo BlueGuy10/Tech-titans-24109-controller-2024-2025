@@ -22,29 +22,29 @@ public class MecanumWheelsController {
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
     }
-    public void horizontalPower(float power) {
-        leftFront.setPower(-power);
-        leftBack.setPower(power);
-        rightFront.setPower(power);
-        rightBack.setPower(-power);
-    }
-    public void verticalPower(float power) {
-        leftFront.setPower(power);
-        leftBack.setPower(power);
-        rightFront.setPower(power);
-        rightBack.setPower(power);
-    }
-    public void turn(float power) {
-        leftFront.setPower(power);
-        leftBack.setPower(power);
-        rightFront.setPower(-power);
-        rightBack.setPower(-power);
-    }
 
-    public void applyPower(float lJX, float lJY, float rJX) {
-        leftFront.setPower(lJY - lJX - rJX);
-        leftBack.setPower(lJY + lJX - rJX);
-        rightFront.setPower(lJY + lJX + rJX);
-        rightBack.setPower(lJY - lJX + rJX);
+    public void applyPower(float x, float y, float yaw) {
+        if (0.2 < x && x > -0.2 && yaw == 0 && y != 0) {
+            leftFront.setPower(y);
+            leftBack.setPower(y);
+            rightFront.setPower(y);
+            rightBack.setPower(y);
+        } else if (x != 0 && y != 0 && yaw == 0) {
+            leftFront.setPower(y - x);
+            leftBack.setPower(y + x);
+            rightFront.setPower(y + x);
+            rightBack.setPower(y - x);
+        } else if (yaw != 0 && x == 0 && y == 0) {
+            leftFront.setPower(-yaw);
+            leftFront.setPower(-yaw);
+            leftBack.setPower(-yaw);
+            rightFront.setPower(yaw);
+            rightBack.setPower(yaw);
+        } else if (y > 0 && yaw != 0 && x == 0) {
+            leftFront.setPower();
+            leftBack.setPower();
+            rightFront.setPower();
+            rightBack.setPower();
+        }
     }
 }
