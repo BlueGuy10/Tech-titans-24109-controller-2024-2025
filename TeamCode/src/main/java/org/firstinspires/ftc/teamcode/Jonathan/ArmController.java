@@ -7,6 +7,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class ArmController {
     private static final float motorPower = 1;
 
+    private static final int maxPitchEncoder = 535;
+    private static final double encoderToRad = (Math.PI/2)/maxPitchEncoder;
+    private static final int MAX_HORIZ_EXT = 7300;
+    private static final int MAX_VER_EXT = 9200;
+
     private DcMotor pitch;
     private DcMotor extension;
 
@@ -20,10 +25,14 @@ public class ArmController {
         pitch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extension.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
+        pitch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         pitch.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         extension.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+//        pitch.setPower(motorPower);
+//        extension.setPower(motorPower);
 
     }
 
@@ -49,10 +58,11 @@ public class ArmController {
         while(pitch.isBusy()) {}
     }
 
-//    public void pitchPower2(int power) {
-//        pitch.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        pitch.setPower(power);
-//    }
+    public void rawPitchPower(float power) {
+        pitch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pitch.setPower(power);
+    }
+
     public void extensionPower(int power) {
         extension.setTargetPosition(power);
         extension.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -67,10 +77,24 @@ public class ArmController {
         while(extension.isBusy()) {}
     }
 
-//    public void extensionPower2(int power) {
-//        extension.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        extension.setPower(power);
-//    }
+    public void rawExtensionPower(float power) {
+        extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        if (getExtensionPosition() <= getMaxExtension(getPitchPosition()) && power < 0) extension.setPower(0);
+        else extension.setPower(power);
+    }
+
+    public int getMaxExtension(int pitch) {
+        double radians = Math.abs(pitch * encoderToRad);
+        double cosinus = Math.cos(radians);
+        if (cosinus <= 0) {
+            return -MAX_VER_EXT;
+        }
+        double calculated = MAX_HORIZ_EXT / cosinus;
+        if (calculated > MAX_VER_EXT) {
+            calculated = MAX_VER_EXT;
+        }
+        return -((int)Math.round(calculated));
+    }
 
     public int getPitchPosition() {
         return pitch.getCurrentPosition();

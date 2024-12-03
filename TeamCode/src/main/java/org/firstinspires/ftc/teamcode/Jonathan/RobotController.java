@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Jonathan;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,7 +10,7 @@ public class RobotController extends LinearOpMode {
         ClawController claw = new ClawController(hardwareMap);
         MecanumWheelsController wheels = new MecanumWheelsController(hardwareMap);
         ArmController arm = new ArmController(hardwareMap);
-        arm.pitchPower(-300);
+        //arm.pitchPower(-300);
         waitForStart();
         while (opModeIsActive()) {
             oneDriver(claw, wheels, arm);
