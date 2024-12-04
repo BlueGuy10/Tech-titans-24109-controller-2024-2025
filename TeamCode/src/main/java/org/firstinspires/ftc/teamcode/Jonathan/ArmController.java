@@ -11,6 +11,8 @@ public class ArmController {
     private static final double encoderToRad = (Math.PI/2)/maxPitchEncoder;
     private static final int MAX_HORIZ_EXT = 7300;
     private static final int MAX_VER_EXT = 9200;
+    private static final int minPitchLimit = 75;
+    private static final int minExtLimit = 0;
 
     private DcMotor pitch;
     private DcMotor extension;
@@ -19,8 +21,8 @@ public class ArmController {
         pitch = hardwareMap.get(DcMotor.class, "PitchMotor");
         extension = hardwareMap.get(DcMotor.class, "ExtensionMotor");
 
-        pitch.setDirection(DcMotorSimple.Direction.REVERSE);
-        extension.setDirection(DcMotorSimple.Direction.FORWARD);
+        pitch.setDirection(DcMotorSimple.Direction.FORWARD);
+        extension.setDirection(DcMotorSimple.Direction.REVERSE);
 
         pitch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extension.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -38,8 +40,8 @@ public class ArmController {
 
     public void pitchPower(int power) {
         int target = extension.getCurrentPosition() + power;
-        if (target <= 1050) {
-            target = 1050;
+        if (target < minPitchLimit) {
+            target = minPitchLimit;
         }
         pitch.setTargetPosition(target);
         pitch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -49,8 +51,8 @@ public class ArmController {
 
     public void setPitchPower(int power) {
         int target = power;
-        if (target <= 1050) {
-            target = 1050;
+        if (target < minPitchLimit) {
+            target = minPitchLimit;
         }
         pitch.setTargetPosition(target);
         pitch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -64,14 +66,22 @@ public class ArmController {
     }
 
     public void extensionPower(int power) {
-        extension.setTargetPosition(power);
+        int target = power;
+        if (target < minExtLimit) {
+            target = minExtLimit;
+        }
+        extension.setTargetPosition(target);
         extension.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extension.setPower(motorPower);
         while(extension.isBusy()) {}
     }
 
     public void setExtensionPower(int power) {
-        extension.setTargetPosition(extension.getCurrentPosition() + power);
+        int target = power;
+        if (target < minExtLimit) {
+            target = minExtLimit;
+        }
+        extension.setTargetPosition(extension.getCurrentPosition() + target);
         extension.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extension.setPower(motorPower);
         while(extension.isBusy()) {}

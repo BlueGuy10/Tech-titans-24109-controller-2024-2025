@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "1 driver control", group = "Driver control")
 public class RobotController extends LinearOpMode {
+    private boolean raisedArm = false;
     @Override
+
     public void runOpMode() throws InterruptedException {
         ClawController claw = new ClawController(hardwareMap);
         MecanumWheelsController wheels = new MecanumWheelsController(hardwareMap);
@@ -19,6 +21,7 @@ public class RobotController extends LinearOpMode {
 
     private void oneDriver(ClawController claw, MecanumWheelsController wheels, ArmController arm) {
         double servoState;
+
         if (gamepad2.right_bumper) {
             claw.closeClaw();
             telemetry.addData("rB", gamepad2.right_bumper);
@@ -29,12 +32,21 @@ public class RobotController extends LinearOpMode {
 
         wheels.applyPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-        arm.pitchPower(Math.round(gamepad2.left_stick_y * 50));
-        arm.extensionPower(Math.round(gamepad2.right_stick_y * 150));
+            arm.pitchPower(Math.round(gamepad2.left_stick_y * 200));
+            telemetry.addData("Gpad2, LY", Math.round(gamepad2.left_stick_y * 200));
+            arm.setExtensionPower(Math.round(gamepad2.right_stick_y * 200));
+            telemetry.addData("Gpad2, RY", Math.round(gamepad2.right_stick_y * 200));
+            telemetry.update();
 
         if (gamepad2.a) {
-            arm.setPitchPower(-1000); //-1000
-            arm.setExtensionPower(-8870); //-8870
+            raisedArm=true;
+            arm.setPitchPower(625); //-1000
+            arm.extensionPower(7500); //-8870
+        }
+        if (gamepad2.b) {
+            arm.extensionPower(0);
+            arm.setPitchPower(75);
+            raisedArm=false;
         }
 
         telemetry.addData("Servo State", claw.getClawPosition());
