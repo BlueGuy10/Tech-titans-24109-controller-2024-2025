@@ -32,20 +32,20 @@ public class RobotController extends LinearOpMode {
 
         wheels.applyPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-            arm.pitchPower(Math.round(gamepad2.left_stick_y * 200));
+            arm.changePitch(Math.round(gamepad2.left_stick_y * 200));
             telemetry.addData("Gpad2, LY", Math.round(gamepad2.left_stick_y * 200));
-            arm.setExtensionPower(Math.round(gamepad2.right_stick_y * 200));
+            arm.changeExtension(Math.round(gamepad2.right_stick_y * 200));
             telemetry.addData("Gpad2, RY", Math.round(gamepad2.right_stick_y * 200));
             telemetry.update();
 
         if (gamepad2.a) {
             raisedArm=true;
-            arm.setPitchPower(625); //-1000
-            arm.extensionPower(7500); //-8870
+            arm.setPitch(600); //-1000
+            arm.setExtension(7500); //-8870
         }
         if (gamepad2.b) {
-            arm.extensionPower(0);
-            arm.setPitchPower(75);
+            arm.setExtension(0);
+            arm.setPitch(75);
             raisedArm=false;
         }
 

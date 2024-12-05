@@ -38,8 +38,8 @@ public class ArmController {
 
     }
 
-    public void pitchPower(int power) {
-        int target = extension.getCurrentPosition() + power;
+    public void changePitch(int power) {
+        int target = pitch.getCurrentPosition() + power;
         if (target < minPitchLimit) {
             target = minPitchLimit;
         }
@@ -49,7 +49,7 @@ public class ArmController {
         while(pitch.isBusy()) {}
     }
 
-    public void setPitchPower(int power) {
+    public void setPitch(int power) {
         int target = power;
         if (target < minPitchLimit) {
             target = minPitchLimit;
@@ -65,7 +65,7 @@ public class ArmController {
         pitch.setPower(power);
     }
 
-    public void extensionPower(int power) {
+    public void setExtension(int power) {
         int target = power;
         if (target < minExtLimit) {
             target = minExtLimit;
@@ -76,12 +76,16 @@ public class ArmController {
         while(extension.isBusy()) {}
     }
 
-    public void setExtensionPower(int power) {
-        int target = power;
+    public void changeExtension(int power) {
+        int target = extension.getCurrentPosition() + power;
+        int maxTarget = getMaxExtension1();
         if (target < minExtLimit) {
             target = minExtLimit;
+        } else if (target > maxTarget) {
+            target = maxTarget;
         }
-        extension.setTargetPosition(extension.getCurrentPosition() + target);
+
+        extension.setTargetPosition(target);
         extension.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extension.setPower(motorPower);
         while(extension.isBusy()) {}
@@ -105,7 +109,12 @@ public class ArmController {
         }
         return -((int)Math.round(calculated));
     }
-
+    public int getMaxExtension1 () {
+        int pitchPosition = pitch.getCurrentPosition();
+        double pitchAngle = (Math.PI/1200) * pitchPosition;
+        double maxLength = (42/Math.cos(pitchAngle));
+        return ((int)Math.round(maxLength * 90.66 * 1.5));
+    }
     public int getPitchPosition() {
         return pitch.getCurrentPosition();
     }
