@@ -30,7 +30,7 @@ public class RobotController extends LinearOpMode {
         wheels.applyPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         arm.pitchPower(Math.round(gamepad2.left_stick_y * 50));
-        arm.extensionPower(Math.round(gamepad2.right_stick_y * 150));
+        arm.rawExtensionPower(gamepad2.right_stick_y * 150);
 
         if (gamepad2.a) {
             arm.setPitchPower(-1000); //-1000
@@ -43,7 +43,7 @@ public class RobotController extends LinearOpMode {
         telemetry.addData("Extension position", arm.getExtensionPosition());
 
         telemetry.addData("lY", Math.round(gamepad2.left_stick_y * 50));
-        telemetry.addData("rY", Math.round(gamepad2.right_stick_y * 50));
+        telemetry.addData("rY", gamepad2.right_stick_y);
         telemetry.update();
 
     }
