@@ -12,7 +12,8 @@ public class RobotController extends LinearOpMode {
         ClawController claw = new ClawController(hardwareMap);
         MecanumWheelsController wheels = new MecanumWheelsController(hardwareMap);
         ArmController arm = new ArmController(hardwareMap);
-        //arm.pitchPower(-300);
+        arm.setPitch(75);
+        claw.openClaw();
         waitForStart();
         while (opModeIsActive()) {
             oneDriver(claw, wheels, arm);

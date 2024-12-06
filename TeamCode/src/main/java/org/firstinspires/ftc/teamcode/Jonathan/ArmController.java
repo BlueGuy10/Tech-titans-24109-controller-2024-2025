@@ -11,7 +11,7 @@ public class ArmController {
     private static final double encoderToRad = (Math.PI/2)/maxPitchEncoder;
     private static final int MAX_HORIZ_EXT = 7300;
     private static final int MAX_VER_EXT = 9200;
-    private static final int minPitchLimit = 75;
+    private static final int maxPitchLimit = 620;
     private static final int minExtLimit = 0;
 
     private DcMotor pitch;
@@ -40,8 +40,10 @@ public class ArmController {
 
     public void changePitch(int power) {
         int target = pitch.getCurrentPosition() + power;
-        if (target < minPitchLimit) {
-            target = minPitchLimit;
+        if (target < getMinPitchLimit()) { //min limit changes as arm extends
+            target = getMinPitchLimit();
+        } else if (target > maxPitchLimit) {
+            target = maxPitchLimit;
         }
         pitch.setTargetPosition(target);
         pitch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -51,8 +53,8 @@ public class ArmController {
 
     public void setPitch(int power) {
         int target = power;
-        if (target < minPitchLimit) {
-            target = minPitchLimit;
+        if (target < getMinPitchLimit()) {
+            target = getMinPitchLimit();
         }
         pitch.setTargetPosition(target);
         pitch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -64,6 +66,7 @@ public class ArmController {
         pitch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         pitch.setPower(power);
     }
+
 
     public void setExtension(int power) {
         int target = power;
@@ -78,7 +81,7 @@ public class ArmController {
 
     public void changeExtension(int power) {
         int target = extension.getCurrentPosition() + power;
-        int maxTarget = getMaxExtension1();
+        int maxTarget = getMaxExtension1(); //max limit changes as arm angle changes
         if (target < minExtLimit) {
             target = minExtLimit;
         } else if (target > maxTarget) {
@@ -111,9 +114,19 @@ public class ArmController {
     }
     public int getMaxExtension1 () {
         int pitchPosition = pitch.getCurrentPosition();
-        double pitchAngle = (Math.PI/1200) * pitchPosition;
-        double maxLength = (42/Math.cos(pitchAngle));
+        double pitchAngle = (Math.PI/1250) * pitchPosition;
+        double cos_pitchAngle = Math.cos(pitchAngle);
+        if ( cos_pitchAngle <= 0) {
+            cos_pitchAngle = 0.001;
+        }
+        double maxLength = (42/cos_pitchAngle);
         return ((int)Math.round(maxLength * 90.66 * 1.5));
+    }
+
+    public int getMinPitchLimit () {
+        int extPosition = extension.getCurrentPosition();
+        double minPitchLimit = 100-(0.025*extPosition);
+        return (int)Math.round(minPitchLimit);
     }
     public int getPitchPosition() {
         return pitch.getCurrentPosition();

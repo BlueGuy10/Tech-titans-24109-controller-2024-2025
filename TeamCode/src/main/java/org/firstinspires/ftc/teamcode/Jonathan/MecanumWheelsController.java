@@ -9,6 +9,7 @@ public class MecanumWheelsController {
     private DcMotor leftBack;
     private DcMotor rightFront;
     private DcMotor rightBack;
+    private static final float scalePower = 0.6F;
 
     public MecanumWheelsController (HardwareMap hardwareMap) {
         leftFront = hardwareMap.get(DcMotor.class, "LeftFront");
@@ -26,10 +27,10 @@ public class MecanumWheelsController {
         x = -x;
         turn = -turn;
 
-        float leftFrontPower = y + turn + x;
-        float leftBackPower = y + turn -x;
-        float rightFrontPower = y - turn -x;
-        float rightBackPower = y - turn + x;
+        float leftFrontPower  = (y + turn + x) * scalePower;
+        float leftBackPower   = (y + turn - x) * scalePower;
+        float rightFrontPower = (y - turn - x) * scalePower;
+        float rightBackPower  = (y - turn + x) * scalePower;
         float[] a = new float[]{Math.abs(leftFrontPower), Math.abs(leftBackPower), Math.abs(rightFrontPower), Math.abs(rightBackPower), 1};
 
         float max = a[0];
