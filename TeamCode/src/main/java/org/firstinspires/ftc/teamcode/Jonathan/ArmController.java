@@ -9,7 +9,7 @@ public class ArmController {
 
     private static final int maxPitchEncoder = 535;
     private static final double encoderToRad = (Math.PI/2)/maxPitchEncoder;
-    private static final int MAX_HORIZ_EXT = 7300;
+    private static final int MAX_HORIZ_EXT = 6000;
     private static final int MAX_VER_EXT = 9200;
     private static final int maxPitchLimit = 620;
     private static final int minExtLimit = 0;
@@ -48,10 +48,10 @@ public class ArmController {
         pitch.setTargetPosition(target);
         pitch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         pitch.setPower(motorPower);
-        while(pitch.isBusy()) {}
+//        while(pitch.isBusy()) {}
     }
 
-    public void setPitch(int power) {
+    public void setPitch(int power ) {
         int target = power;
         if (target < getMinPitchLimit()) {
             target = getMinPitchLimit();
@@ -96,7 +96,7 @@ public class ArmController {
 
     public void rawExtensionPower(float power) {
         extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        if (getExtensionPosition() <= getMaxExtension(getPitchPosition()) && power < 0) extension.setPower(0);
+        if (getExtensionPosition() >= getMaxExtension(getPitchPosition()) && power > 0 && getExtensionPosition() >= -50) extension.setPower(0);
         else extension.setPower(power);
     }
 
@@ -104,14 +104,16 @@ public class ArmController {
         double radians = Math.abs(pitch * encoderToRad);
         double cosinus = Math.cos(radians);
         if (cosinus <= 0) {
-            return -MAX_VER_EXT;
+            return MAX_VER_EXT;
         }
         double calculated = MAX_HORIZ_EXT / cosinus;
         if (calculated > MAX_VER_EXT) {
             calculated = MAX_VER_EXT;
         }
-        return -((int)Math.round(calculated));
+        return ((int)Math.round(calculated));
     }
+
+
     public int getMaxExtension1 () {
         int pitchPosition = pitch.getCurrentPosition();
         double pitchAngle = (Math.PI/1250) * pitchPosition;
