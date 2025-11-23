@@ -13,7 +13,7 @@ public class ParallelAction implements ICompositeAction {
         if (parallelActions.length == 0) {
             isFinished = true;
             isStopped = true;
-        };
+        }
     }
 
     @Override
@@ -21,7 +21,7 @@ public class ParallelAction implements ICompositeAction {
         return parallelActions;
     }
 
-    @Override   // TODO implement
+    @Override
     public boolean init() {
         if (isInitialized()) throw new IllegalStateException("Can not reinitialize after initialization");
         for (IAction action :
@@ -32,28 +32,35 @@ public class ParallelAction implements ICompositeAction {
         return true;
     }
 
-    @Override   // TODO implement
+    @Override
     public boolean isInitialized() {
         return isInitialized;
     }
 
-    @Override   // TODO implement
+    @Override
     public boolean iterate() {
         if (!isInitialized()) throw new IllegalStateException("Can not iterate before initialization");
         if (parallelActions.length == 0) throw new IllegalStateException("Can not iterate with a empty list of actions");
+        if (isFinished()) throw new IllegalStateException("Can not iterate after finished");
+        if (isStopped()) throw new IllegalStateException("Can not iterate after stopped");
         for (IAction action :
                 parallelActions) {
-            action.iterate();
+            if (!action.isFinished()) action.iterate();
         }
-        return true;
+        for (IAction action :
+                parallelActions) {
+            if (!action.isFinished()) return true;
+        }
+        isFinished = true;
+        return false;
     }
 
-    @Override   // TODO implement
+    @Override
     public boolean isFinished() {
         return isFinished;
     }
 
-    @Override   // TODO implement
+    @Override
     public boolean stop() {
         for (IAction action :
                 parallelActions) {
@@ -63,7 +70,7 @@ public class ParallelAction implements ICompositeAction {
         return true;
     }
 
-    @Override   // TODO implement
+    @Override
     public boolean isStopped() {
         return isStopped;
     }
