@@ -59,6 +59,7 @@ public class ParallelAction implements ICompositeAction {
                 parallelActions) {
             action.stop();
         }
+        isStopped = true;
         return true;
     }
 
