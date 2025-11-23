@@ -1,51 +1,55 @@
 package org.firstinspires.ftc.teamcode.actions;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.controllers.ShooterWheelController;
+import org.firstinspires.ftc.teamcode.controllers.IntakeController;
 
-public class ShooterAction implements IAction{
+public class IntakeAction implements IAction{
     int iterates = 0;
-    private final ShooterWheelController shooterWheelController;
+    private final IntakeController intakeController;
     private final Telemetry telemetry;
     private final double power;
 
-
-    public ShooterAction(Telemetry telemetry, ShooterWheelController shooterWheelController, double power) {
+    public IntakeAction(IntakeController intakeController, Telemetry telemetry, double power) {
+        this.intakeController = intakeController;
         this.telemetry = telemetry;
-        this.shooterWheelController = shooterWheelController;
         this.power = power;
     }
 
+
     @Override
     public boolean init() {
-        return isInitialized();
+        return false;
     }
 
     @Override
     public boolean isInitialized() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean iterate() {
-        shooterWheelController.spinWheel(power);
+        intakeController.intake(power);
+        iterates++;
         return true;
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        if (iterates >= 100000) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
     public boolean stop() {
-        // TODO - implement
         return false;
     }
 
     @Override
     public boolean isStopped() {
-        // TODO - implement
         return false;
     }
 }

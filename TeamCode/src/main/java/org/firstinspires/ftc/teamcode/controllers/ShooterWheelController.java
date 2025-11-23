@@ -11,6 +11,7 @@ public class ShooterWheelController {
     public ShooterWheelController (HardwareMap hardwareMap) {
         shooterWheel = hardwareMap.get(DcMotor.class, "Shooter");
         shooterWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void spinWheel(double power) {

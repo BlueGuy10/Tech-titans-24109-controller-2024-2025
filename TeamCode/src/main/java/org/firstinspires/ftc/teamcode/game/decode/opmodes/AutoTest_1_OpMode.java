@@ -3,23 +3,50 @@ package org.firstinspires.ftc.teamcode.game.decode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Jonah.ImuUtility;
 import org.firstinspires.ftc.teamcode.Jonathan.MecanumWheelsController;
+import org.firstinspires.ftc.teamcode.actions.BootKickAction;
+import org.firstinspires.ftc.teamcode.actions.IntakeAction;
 import org.firstinspires.ftc.teamcode.actions.MotorAction;
+import org.firstinspires.ftc.teamcode.actions.ShooterAction;
 import org.firstinspires.ftc.teamcode.actions.TelemetryAction;
+import org.firstinspires.ftc.teamcode.actions.TimeWaitAction;
 import org.firstinspires.ftc.teamcode.actions.TurnAction;
+import org.firstinspires.ftc.teamcode.controllers.IntakeController;
+import org.firstinspires.ftc.teamcode.controllers.ShooterWheelController;
+import org.firstinspires.ftc.teamcode.game.Alliance;
+import org.firstinspires.ftc.teamcode.game.decode.DecodeRobot;
 
 @Autonomous(name = "Auto test Match 1", group = "Match Opmodes")
 public class AutoTest_1_OpMode extends DecodeOpmode {
+    private static final Pose2D START_POS = new Pose2D(DistanceUnit.CM, 0, 0, AngleUnit.DEGREES, 0);
+    private static final Alliance ALLIANCE = Alliance.RED;
 
     @Override
     protected void createMatch() {
         IMU imu = hardwareMap.get(IMU.class, "imu");
         ImuUtility imuCalculator = new ImuUtility(imu);
 
-        addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 106.5));
-        addAutoAction(new TurnAction(imuCalculator, 45, new MecanumWheelsController(hardwareMap), telemetry));
-        addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 10));
-        addAutoAction(new TelemetryAction("I'm shooting", telemetry));
+        DecodeRobot robot = getRobot();
+        robot.setStartPosition(START_POS);
+        robot.setAlliance(ALLIANCE);
+        // create autonomous actions
+        addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 107));
+        addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+        addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 61));
+        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new TimeWaitAction(1000));
+        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0));
     }
 }
