@@ -5,9 +5,15 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.Jonah.ImuUtility;
 import org.firstinspires.ftc.teamcode.Jonathan.MecanumWheelsController;
+import org.firstinspires.ftc.teamcode.actions.BootKickAction;
+import org.firstinspires.ftc.teamcode.actions.IntakeAction;
 import org.firstinspires.ftc.teamcode.actions.MotorAction;
+import org.firstinspires.ftc.teamcode.actions.ShooterAction;
 import org.firstinspires.ftc.teamcode.actions.TelemetryAction;
+import org.firstinspires.ftc.teamcode.actions.TimeWaitAction;
 import org.firstinspires.ftc.teamcode.actions.TurnAction;
+import org.firstinspires.ftc.teamcode.controllers.IntakeController;
+import org.firstinspires.ftc.teamcode.controllers.ShooterWheelController;
 
 @Autonomous(name = "Auto test Match 2", group = "Match Opmodes")
 public class AutoTest_2_OpMode extends DecodeOpmode {
@@ -17,9 +23,17 @@ public class AutoTest_2_OpMode extends DecodeOpmode {
         IMU imu = hardwareMap.get(IMU.class, "imu");
         ImuUtility imuCalculator = new ImuUtility(imu);
 
-        addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 106.5));
-        addAutoAction(new TurnAction(imuCalculator, 45, new MecanumWheelsController(hardwareMap), telemetry));
-        addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 10));
-        addAutoAction(new TelemetryAction("I'm shooting", telemetry));
+        addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -114.3));
+        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new TimeWaitAction(1000));
+        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0));
     }
 }
