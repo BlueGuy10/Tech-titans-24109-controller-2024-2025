@@ -7,12 +7,12 @@ public class BootKickAction implements IAction {
     int iterates = 0;
     private final IntakeController intakeController;
     private final Telemetry telemetry;
-    private final double power;
+    private final double position;
 
-    public BootKickAction(IntakeController intakeController, Telemetry telemetry, double power) {
+    public BootKickAction(IntakeController intakeController, Telemetry telemetry, double position) {
         this.intakeController = intakeController;
         this.telemetry = telemetry;
-        this.power = power;
+        this.position = position;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class BootKickAction implements IAction {
 
         @Override
         public boolean iterate () {
-            intakeController.bootKick(power);
+            intakeController.bootKick(position);
             telemetry.addLine("running bootkick");
             iterates++;
             return true;

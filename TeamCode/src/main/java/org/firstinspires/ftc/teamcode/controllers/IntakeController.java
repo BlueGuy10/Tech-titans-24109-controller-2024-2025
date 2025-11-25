@@ -19,8 +19,8 @@ public class IntakeController{
         intakeWheel.setPower(power);
     }
 
-    public void bootKick(double power) {
-        bootKicker.setPosition(power);
+    public void bootKick(double pos) {
+        bootKicker.setPosition(pos);
     }
 }
 

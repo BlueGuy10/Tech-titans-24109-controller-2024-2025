@@ -8,6 +8,7 @@ public class ShooterAction implements IAction{
     private final ShooterWheelController shooterWheelController;
     private final Telemetry telemetry;
     private final double power;
+    private boolean isFinished = false;
 
 
     public ShooterAction(Telemetry telemetry, ShooterWheelController shooterWheelController, double power) {
@@ -28,13 +29,14 @@ public class ShooterAction implements IAction{
 
     @Override
     public boolean iterate() {
-        shooterWheelController.spinWheel(power);
+        shooterWheelController.spinWheel(-power);
+        isFinished = true;
         return true;
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return isFinished;
     }
 
     @Override
