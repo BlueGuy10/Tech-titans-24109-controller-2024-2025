@@ -4,7 +4,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.controllers.ShooterWheelController;
 
 public class ShooterAction implements IAction{
-    int iterates = 0;
     private final ShooterWheelController shooterWheelController;
     private final Telemetry telemetry;
     private final double power;

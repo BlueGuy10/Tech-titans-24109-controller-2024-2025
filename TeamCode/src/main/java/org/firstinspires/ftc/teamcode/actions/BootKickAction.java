@@ -35,7 +35,7 @@ public class BootKickAction implements IAction {
 
         @Override
         public boolean isFinished () {
-            if (iterates >= 100000) {
+            if (iterates >= 50000) {
                 return true;
             } else {
                 telemetry.update();

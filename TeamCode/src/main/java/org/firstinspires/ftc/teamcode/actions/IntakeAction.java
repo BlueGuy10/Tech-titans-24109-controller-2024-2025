@@ -8,6 +8,7 @@ public class IntakeAction implements IAction{
     private final IntakeController intakeController;
     private final Telemetry telemetry;
     private final double power;
+    private boolean isFinished = false;
 
     public IntakeAction(IntakeController intakeController, Telemetry telemetry, double power) {
         this.intakeController = intakeController;
@@ -18,29 +19,24 @@ public class IntakeAction implements IAction{
 
     @Override
     public boolean init() {
-        return false;
+        return isInitialized();
     }
 
     @Override
     public boolean isInitialized() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean iterate() {
         intakeController.intake(power);
-        iterates++;
+        isFinished = true;
         return true;
     }
 
     @Override
     public boolean isFinished() {
-        if (iterates >= 100000) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return isFinished;
     }
 
     @Override
