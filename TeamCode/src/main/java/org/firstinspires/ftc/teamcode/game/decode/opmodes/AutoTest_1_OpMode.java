@@ -34,28 +34,28 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
         robot.setStartPosition(START_POS);
         robot.setAlliance(ALLIANCE);
         // create autonomous actions
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 195));
+            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 195));
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1));
-            addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 40));
+            //addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 40));
             addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
             addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
-            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));
             addAutoAction(new SensorAction(new SensorController(hardwareMap)));
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
             addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
-            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));
             addAutoAction(new SensorAction(new SensorController(hardwareMap)));
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
             addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
             addAutoAction(new SensorAction(new SensorController(hardwareMap)));
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0));
-            addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -30));
+            //addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -30));
             //strafe
-            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 30));
+            //addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 30));
     }
 }
