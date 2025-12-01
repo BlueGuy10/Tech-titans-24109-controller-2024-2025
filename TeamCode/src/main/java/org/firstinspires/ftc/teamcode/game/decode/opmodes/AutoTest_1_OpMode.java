@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.actions.BootKickAction;
 import org.firstinspires.ftc.teamcode.actions.IntakeAction;
 import org.firstinspires.ftc.teamcode.actions.MotorAction;
 import org.firstinspires.ftc.teamcode.actions.ShooterAction;
+import org.firstinspires.ftc.teamcode.actions.StrafeAction;
 import org.firstinspires.ftc.teamcode.actions.TimeWaitAction;
 import org.firstinspires.ftc.teamcode.actions.TurnAction;
 import org.firstinspires.ftc.teamcode.controllers.IntakeController;
@@ -52,10 +53,10 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
             addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 1));
             addAutoAction(new SensorAction(new SensorController(hardwareMap)));
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0));
-            //addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
-            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -30));
-            //strafe
-            //addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
-            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 30));
+            addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -30));
+            addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 40));
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 30));
     }
 }

@@ -48,7 +48,7 @@ public class DecodeTeleOp extends LinearOpMode {
             if (shootPad.right_trigger > 0.1) {
                 intakeController.bootKick(-1);
             } else {
-                intakeController.bootKick(1);
+                intakeController.bootKick(0.5);
             }
         }
     }
