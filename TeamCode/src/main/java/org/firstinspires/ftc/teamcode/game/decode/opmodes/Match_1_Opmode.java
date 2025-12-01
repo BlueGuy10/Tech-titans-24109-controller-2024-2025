@@ -32,14 +32,16 @@ public class Match_1_Opmode extends DecodeOpmode {
         robot.setStartPosition(START_POS);
         robot.setAlliance(ALLIANCE);
         // create autonomous actions
-        addAutoAction(new TimeWaitAction(1000));
-        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.2));
         addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
-        addAutoAction(new TimeWaitAction(1000));
-        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1));
-        addAutoAction(new TimeWaitAction(1000));
-        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -0.7));
-        addAutoAction(new TimeWaitAction(1000));
+        addAutoAction(new TimeWaitAction(1500));
         addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
+        addAutoAction(new TimeWaitAction(500));
+        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1));
+        addAutoAction(new TimeWaitAction(500));
+        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.7));
+        addAutoAction(new TimeWaitAction(2000));
+
     }
 }
