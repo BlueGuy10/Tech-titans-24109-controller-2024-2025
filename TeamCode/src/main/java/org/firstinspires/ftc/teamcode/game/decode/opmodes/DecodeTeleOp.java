@@ -16,7 +16,7 @@ public class DecodeTeleOp extends LinearOpMode {
         IntakeController intakeController = new IntakeController(hardwareMap);
         ShooterWheelController shooterWheelController = new ShooterWheelController(hardwareMap);
         intakeController.bootKick(1);
-        boolean twoControllers = false;
+        boolean twoControllers = true;
         while (opModeInInit()) {
             if (gamepad1.dpad_up) twoControllers = true;
             if (gamepad1.dpad_down) twoControllers = false;
@@ -26,7 +26,7 @@ public class DecodeTeleOp extends LinearOpMode {
         Gamepad shootPad = (twoControllers) ? gamepad2 : gamepad1;
         while (opModeIsActive()) {
             float wheelsFineControlValue = 1;
-            if (shootPad.left_bumper) {
+            if (movePad.left_bumper) {
                 wheelsFineControlValue = 0.5f;
             }
             mecanumWheelsController.applyPower(movePad.left_stick_x * wheelsFineControlValue, movePad.left_stick_y * wheelsFineControlValue, movePad.right_stick_x * wheelsFineControlValue);
