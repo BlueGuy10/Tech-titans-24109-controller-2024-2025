@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.motions.TimeService;
 
 public class TurnAction implements IAction {
 
-    public static final double ANGLE_ERROR = 2; // degrees
+    public static final double ANGLE_ERROR = 5; // degrees
 
     private final MecanumWheelsController wheels;
     private final ImuUtility imuCalculator;
