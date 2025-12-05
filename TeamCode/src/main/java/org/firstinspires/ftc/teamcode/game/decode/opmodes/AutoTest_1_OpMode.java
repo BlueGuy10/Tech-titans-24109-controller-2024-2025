@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.SensorController;
 @Autonomous(name = "Auto test Match 1", group = "Match Opmodes")
 public class AutoTest_1_OpMode extends DecodeOpmode {
     private static final Pose2D START_POS = new Pose2D(DistanceUnit.CM, 0, 0, AngleUnit.DEGREES, 0);
-    private static final Alliance ALLIANCE = Alliance.RED;
+    private static final Alliance ALLIANCE = Alliance.BLUE;
 
     @Override
     protected void createMatch() {
@@ -36,35 +36,40 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
         robot.setStartPosition(START_POS);
         robot.setAlliance(ALLIANCE);
         // create autonomous actions
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4)); // close gate
-            addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//bootKicker down
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 195));
-            addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1)); //spin up shooter
-            addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 40));
+            //addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4)); // close gate
+            //addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//bootKicker down
+            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ?  195 : 180));
+            //addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1)); //spin up shooter
+            //imuCalculator.reset();
+            //addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+            //addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 20));
+            //addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -0.5));//open
+            //addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.9));// up
+            //addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//down
+            //addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));//intake
+            //addAutoAction(new TimeWaitAction(1000));
+            //addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
+            //addAutoAction(new TimeWaitAction(500));
+            //addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));//intake
+            //addAutoAction(new TimeWaitAction(2000));
+            //addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
+            //addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4));//close
+            //addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0));
+            //imuCalculator.reset();
+            //addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+//            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -30));
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 50));
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
+            addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1));
+            addAutoAction(new TimeWaitAction(1000));
             addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -0.5));//open
             addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.9));// up
             addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//down
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4));//close
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));//intake
             addAutoAction(new TimeWaitAction(1000));
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -0.5));//open
-            addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.9));//up
-            addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//down
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4));//close
-            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));//intake
-            addAutoAction(new TimeWaitAction(1000));
-            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -0.5));//open
-            addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.9));//up
-            addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//down
-            addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4));//close
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0));
-            addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -30));
-            addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 40));
-            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 30));
+
     }
 }

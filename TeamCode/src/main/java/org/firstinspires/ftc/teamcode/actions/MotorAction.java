@@ -53,6 +53,9 @@ public class MotorAction implements IAction {
     public boolean isFinished() {
         double currentDistance = wheels.getDistance();
         double remainingDistance = targetDistance - currentDistance;
+        if (targetDistance < 0) {
+            remainingDistance = -remainingDistance;
+        }
         if (Math.abs(remainingDistance) < MOVEMENT_ERROR) {
             wheels.autoDrive(0, 0, 0, 0);
             telemetry.addLine("stopped");
