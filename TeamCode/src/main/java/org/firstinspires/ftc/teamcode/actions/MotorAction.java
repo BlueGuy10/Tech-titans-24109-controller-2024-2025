@@ -39,22 +39,30 @@ public class MotorAction implements IAction {
     @Override
     public boolean iterate() {
         double currentDistance = wheels.getDistance();
-        double remainingDistance = targetDistance - currentDistance;
+        double remainingDistance;
+        if (targetDistance <0) {
+            remainingDistance = targetDistance + currentDistance;
+        } else {
+            remainingDistance = targetDistance - currentDistance;
+        }
 
         double powerValue = pidController.calculatePower(remainingDistance) * -1;
         wheels.autoDrive(powerValue, powerValue, powerValue, powerValue);
         telemetry.addData("power", powerValue);
         telemetry.addData("current distance", currentDistance);
         telemetry.addData("remaining distance", remainingDistance);
+        telemetry.update();
         return true;
     }
 
     @Override
     public boolean isFinished() {
         double currentDistance = wheels.getDistance();
-        double remainingDistance = targetDistance - currentDistance;
-        if (targetDistance < 0) {
-            remainingDistance = -remainingDistance;
+        double remainingDistance;
+        if (targetDistance <0) {
+            remainingDistance = targetDistance + currentDistance;
+        } else {
+            remainingDistance = targetDistance - currentDistance;
         }
         if (Math.abs(remainingDistance) < MOVEMENT_ERROR) {
             wheels.autoDrive(0, 0, 0, 0);

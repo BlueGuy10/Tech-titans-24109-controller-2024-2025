@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.motions.PidController;
 import org.firstinspires.ftc.teamcode.motions.TimeService;
 
 public class TurnAction implements IAction {
+    MaxTime maxTime = new MaxTime(700);
 
     public static final double ANGLE_ERROR = 5; // degrees
 
@@ -31,6 +32,7 @@ public class TurnAction implements IAction {
 
     @Override
     public boolean init() {
+        maxTime.start();
         imuCalculator.reset();
         targetAngle = imuCalculator.getCurrentAngle() + turnAngle;
         isInitialized = true;
@@ -47,7 +49,7 @@ public class TurnAction implements IAction {
         double currentAngle = imuCalculator.getCurrentAngle();
         double remainingAngle = targetAngle - currentAngle;
 
-        double powerValue = pidController.calculatePower(remainingAngle) * 0.2;
+        double powerValue = pidController.calculatePower(remainingAngle);
         double leftPower = powerValue;
         double rightPower = -powerValue;
         wheels.autoDrive(leftPower, leftPower, rightPower, rightPower);
@@ -62,6 +64,9 @@ public class TurnAction implements IAction {
 
     @Override
     public boolean isFinished() {
+        if (maxTime. isExceeded()) {
+            return true;}
+
         double currentAngle = imuCalculator.getCurrentAngle();
         double remainingAngle = targetAngle - currentAngle;
 

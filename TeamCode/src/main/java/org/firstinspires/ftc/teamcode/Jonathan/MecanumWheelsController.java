@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class MecanumWheelsController {
 
-    private static final float SCALE_POWER = 0.6F;
+    private static final float SCALE_POWER = 0.8F;
     private static final float WHEEL_CIRCUMFERENCE = 31.4159F; // cm
     private static final int TICKS_PER_REVOLUTION = 1120; // pulses is div by 4
 
