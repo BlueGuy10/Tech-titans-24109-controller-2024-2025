@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.sensor.apriltag;
 
+import org.firstinspires.ftc.teamcode.game.Alliance;
 import org.firstinspires.ftc.teamcode.game.decode.Motif;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
@@ -66,6 +67,17 @@ public class DecodeAprilTagDetector implements IDecodeAprilTagDetector {
             }
         }
         return Motif.Unknown;
+    }
+
+    @Override
+    public boolean isGoalDetected(Alliance alliance) {
+        return (alliance == Alliance.RED && isRedGoalDetected())
+                || (alliance == Alliance.BLUE && isBlueGoalDetected());
+    }
+
+    @Override
+    public double getDistance() {
+        return 0;
     }
 
     @Override
