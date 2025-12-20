@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.actions.BootKickAction;
 import org.firstinspires.ftc.teamcode.actions.IntakeAction;
 import org.firstinspires.ftc.teamcode.actions.MotorAction;
 import org.firstinspires.ftc.teamcode.actions.ShooterAction;
+import org.firstinspires.ftc.teamcode.actions.StrafeAction;
 import org.firstinspires.ftc.teamcode.actions.TimeWaitAction;
 import org.firstinspires.ftc.teamcode.actions.TurnAction;
 import org.firstinspires.ftc.teamcode.controllers.IntakeController;
@@ -45,7 +46,7 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1, new AprilTagDetector(camera), robot.getAlliance())); //spin up shooter
             imuCalculator.reset();
             addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
-            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 20));
+            addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 45));
             addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -0.5));//open
             addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.9));// up
             addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//down
@@ -60,10 +61,12 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0, new AprilTagDetector(camera), robot.getAlliance()));
             imuCalculator.reset();
             addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+            addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ? 6 : -6));
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
             addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 70));
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
             addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -70));
+            addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ? -6 : 6));
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1, new AprilTagDetector(camera), robot.getAlliance()));
             addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? 45 : -45, new MecanumWheelsController(hardwareMap), telemetry));
             addAutoAction(new TimeWaitAction(500));
@@ -74,5 +77,7 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
             addAutoAction(new TimeWaitAction(1000));
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
             addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0, new AprilTagDetector(camera), robot.getAlliance()));
+            addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
+            addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ? -4 : 4));
     }
 }

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.actions;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Jonah.ImuUtility;
 import org.firstinspires.ftc.teamcode.Jonathan.MecanumWheelsController;
@@ -7,7 +9,8 @@ import org.firstinspires.ftc.teamcode.motions.PidController;
 import org.firstinspires.ftc.teamcode.motions.TimeService;
 
 public class TurnAction implements IAction {
-    MaxTime maxTime = new MaxTime(700);
+    private ElapsedTime elapsedTime;
+    double maxTime = 500;
 
     public static final double ANGLE_ERROR = 5; // degrees
 
@@ -32,9 +35,9 @@ public class TurnAction implements IAction {
 
     @Override
     public boolean init() {
-        maxTime.start();
         imuCalculator.reset();
         targetAngle = imuCalculator.getCurrentAngle() + turnAngle;
+        elapsedTime = new ElapsedTime();
         isInitialized = true;
         return isInitialized();
     }
@@ -59,13 +62,14 @@ public class TurnAction implements IAction {
         telemetry.addData("target. ", targetAngle);
         telemetry.update();
 
-        return true;
+        return elapsedTime.milliseconds() >= maxTime;
     }
 
     @Override
     public boolean isFinished() {
-        if (maxTime. isExceeded()) {
-            return true;}
+        if (elapsedTime.milliseconds() >= maxTime) {
+            return true;
+        }
 
         double currentAngle = imuCalculator.getCurrentAngle();
         double remainingAngle = targetAngle - currentAngle;

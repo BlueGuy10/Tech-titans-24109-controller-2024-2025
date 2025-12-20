@@ -41,13 +41,9 @@ public class DecodeTeleOp extends LinearOpMode {
                 shooterWheelController.spinWheel(0.05);
             } else if (shootPad.right_bumper) {
                 shooterWheelController.spinWheel(-1);
-            } else {
-                shooterWheelController.spinWheel(0);
-            }
-
-            if (shootPad.right_trigger > 0.1) {
                 intakeController.bootKick(-1);
             } else {
+                shooterWheelController.spinWheel(0);
                 intakeController.bootKick(0.5);
             }
         }
