@@ -59,6 +59,7 @@ public abstract class DecodeOpmode extends ExtendableOpmode {
     }
 
     protected void addAuto2Strategy(CameraName camera, Alliance alliance, ImuUtility imuUtility) {
+        //random message: hi
         Motif motif = Motif.PPG;
         addShootAction(camera);
         addAlignSpikeMarkFromC6(alliance, motif, imuUtility);
