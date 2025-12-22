@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.Stoppable;
 import org.firstinspires.ftc.teamcode.game.Alliance;
 import org.firstinspires.ftc.teamcode.game.decode.Motif;
 
-public interface IDecodeAprilTagDetector extends Startable, Stoppable {
+public interface IDecodeAprilTagDetector {
 
     boolean isRedGoalDetected();
 

@@ -29,7 +29,8 @@ public class AprilTagDetector implements IAprilTagDetector {
                 .setCamera(camera)
                 .addProcessor(aprilTagProcessor)
                 .build();
-        this.stop();
+        //this.stop();
+        started = true;
     }
 
     @Override
@@ -40,27 +41,27 @@ public class AprilTagDetector implements IAprilTagDetector {
         return Collections.emptyList();
     }
 
-    @Override
-    public boolean start() {
-        visionPortal.resumeStreaming();
-        started = true;
-        return started;
-    }
-
-    @Override
-    public boolean isStarted() {
-        return started;
-    }
-
-    @Override
-    public boolean stop() {
-        visionPortal.stopStreaming();
-        started = false;
-        return started;
-    }
-
-    @Override
-    public boolean isStopped() {
-        return !started;
-    }
+//    @Override
+//    public boolean start() {
+//        visionPortal.resumeStreaming();
+//        started = true;
+//        return started;
+//    }
+//
+//    @Override
+//    public boolean isStarted() {
+//        return started;
+//    }
+//
+//    @Override
+//    public boolean stop() {
+//        visionPortal.stopStreaming();
+//        started = false;
+//        return started;
+//    }
+//
+//    @Override
+//    public boolean isStopped() {
+//        return !started;
+//    }
 }

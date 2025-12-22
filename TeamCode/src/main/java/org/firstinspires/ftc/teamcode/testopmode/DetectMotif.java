@@ -11,7 +11,7 @@ public class DetectMotif extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         DecodeAprilTagDetector detecter = new DecodeAprilTagDetector(new AprilTagDetector(hardwareMap.get(WebcamName.class, "Webcam 1")));
         waitForStart();
-        detecter.start();
+//        detecter.start();
         while (opModeIsActive()) {
             telemetry.addData("Detected: ", detecter.getMotif());
         }

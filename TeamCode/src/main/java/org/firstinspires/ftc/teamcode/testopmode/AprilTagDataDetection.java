@@ -26,9 +26,9 @@ public class AprilTagDataDetection extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            if (detector.isStopped()) {
-                detector.start();
-            }
+//            if (detector.isStopped()) {
+//                detector.start();
+//            }
             List<AprilTagDetection> currentDetections = detector.getAprilTags();
 
             if (!currentDetections.isEmpty()) {
@@ -56,6 +56,6 @@ public class AprilTagDataDetection extends LinearOpMode {
             telemetry.update();
         }
 
-        detector.stop();
+//        detector.stop();
     }
 }
