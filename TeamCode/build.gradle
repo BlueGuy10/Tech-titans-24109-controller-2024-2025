@@ -22,8 +22,21 @@ plugins {
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 
+repositories {
+    google()
+    mavenCentral()
+    maven {
+        url = "https://mymaven.bylazar.com/releases"
+    }
+}
+
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
+
+    compileSdk 35
+    defaultConfig {
+        minSdk 24
+    }
 
     packagingOptions {
         jniLibs.useLegacyPackaging true
@@ -33,11 +46,13 @@ android {
 ext {
     // align with android-junit5 plugin
     junitJupiterVersion = '5.10.1'
+//    panelsVersion = '1.0.5'
 }
 
 dependencies {
     implementation project(':FtcRobotController')
 
+    implementation "com.bylazar:fullpanels:1.0.5"
 
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
