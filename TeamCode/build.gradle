@@ -46,13 +46,12 @@ android {
 ext {
     // align with android-junit5 plugin
     junitJupiterVersion = '5.10.1'
-//    panelsVersion = '1.0.5'
 }
 
 dependencies {
     implementation project(':FtcRobotController')
 
-    implementation "com.bylazar:fullpanels:1.0.5"
+    implementation "com.bylazar:fullpanels:1.0.12"
 
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
