@@ -43,7 +43,7 @@ public class ShooterWheelController {
         currentRPM = (revolutions / (time - prevTime)) * 60;
         prevPosition = position;
         prevTime = time;
-        //return currentRPM;
-        return position;
+        return currentRPM;
+        //return position;
     }
 }
