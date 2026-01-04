@@ -34,12 +34,13 @@ public class ShooterWheelController {
         return shooterWheel.getCurrentPosition();
     }
     public double getRPM(Telemetry telemetry) {
-        double CPR = shooterWheel.getMotorType().getTicksPerRev();
+        double TPR = shooterWheel.getMotorType().getTicksPerRev();
+        double TPS = 2440;
         double revolutions;
         double currentRPM;
         double position = shooterWheel.getCurrentPosition();
         double time = runtime.milliseconds() * 1000;
-        revolutions = Math.abs(position - prevPosition) / CPR;
+        revolutions = Math.abs(position - prevPosition) / TPR;
         currentRPM = (revolutions / (time - prevTime)) * 60;
         prevPosition = position;
         prevTime = time;
