@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.sensor.apriltag.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.sensor.apriltag.DecodeAprilTagDetector;
 import org.firstinspires.ftc.teamcode.sensor.util.DistanceToPowerConverter;
 
-public class ShooterAction implements IAction{
+public class ShooterAction implements IAction {
     private final ShooterWheelController shooterWheelController;
     private final Telemetry telemetry;
     private final double power;
@@ -47,7 +47,7 @@ public class ShooterAction implements IAction{
         if (decodeAprilTagDetector.isGoalDetected(alliance)) {
             Alliance alliance = Alliance.RED;
             shooterWheelController.spinWheel(-DistanceToPowerConverter.convert(aprilTagDetector.getAprilTags().get(0).ftcPose.range));
-            telemetry.addData("rpm", shooterWheelController.getRPM(telemetry));
+            telemetry.addData("rpm", shooterWheelController.getRPM());
             telemetry.addData("Current Position", shooterWheelController.getShooterPosition());
             telemetry.update();
             isFinished = true;
@@ -57,7 +57,7 @@ public class ShooterAction implements IAction{
 
     @Override
     public boolean isFinished() {
-            return  isFinished;
+        return isFinished;
     }
 
     @Override

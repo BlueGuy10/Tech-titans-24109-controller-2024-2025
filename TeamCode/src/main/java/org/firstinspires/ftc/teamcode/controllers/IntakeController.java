@@ -7,13 +7,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class IntakeController{
     private DcMotor intakeWheel;
-    private Servo bootKicker;
-    private Servo bootKickerAlt;
+//    private Servo bootKicker;
+//    private Servo bootKickerAlt;
 
     public IntakeController (HardwareMap hardwareMap) {
         intakeWheel = hardwareMap.get(DcMotor.class, "Intake");
-        bootKicker = hardwareMap.get(Servo.class, "BootKicker2");
-        bootKickerAlt = hardwareMap.get(Servo.class, "BootKicker");
+//        bootKicker = hardwareMap.get(Servo.class, "BootKicker2");
+//        bootKickerAlt = hardwareMap.get(Servo.class, "BootKicker");
         intakeWheel.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
@@ -22,11 +22,11 @@ public class IntakeController{
     }
 
     public void bootKick(double pos) {
-        bootKicker.setPosition(pos);
+//        bootKicker.setPosition(pos);
     }
 
     public void bootKickAlt(double pos) {
-        bootKickerAlt.setPosition(pos);
+//        bootKickerAlt.setPosition(pos);
     }
 
 }

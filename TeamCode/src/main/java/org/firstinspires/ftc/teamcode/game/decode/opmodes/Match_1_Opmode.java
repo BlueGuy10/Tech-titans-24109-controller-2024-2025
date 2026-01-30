@@ -10,9 +10,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Jonah.ImuUtility;
+import org.firstinspires.ftc.teamcode.Jonathan.MecanumWheelsController;
+import org.firstinspires.ftc.teamcode.actions.IntakeAction;
+import org.firstinspires.ftc.teamcode.actions.MotorAction;
 import org.firstinspires.ftc.teamcode.actions.ShooterAction;
 import org.firstinspires.ftc.teamcode.actions.ShooterAction2;
+import org.firstinspires.ftc.teamcode.actions.StrafeAction;
 import org.firstinspires.ftc.teamcode.actions.TimeWaitAction;
+import org.firstinspires.ftc.teamcode.actions.TurnAction;
+import org.firstinspires.ftc.teamcode.controllers.IntakeController;
 import org.firstinspires.ftc.teamcode.controllers.ShooterWheelController;
 import org.firstinspires.ftc.teamcode.game.Alliance;
 import org.firstinspires.ftc.teamcode.game.decode.DecodeRobot;
@@ -34,7 +40,10 @@ public class Match_1_Opmode extends DecodeOpmode {
         robot.setStartPosition(START_POS);
         robot.setAlliance(ALLIANCE);
         // create autonomous actions
-        addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 1));
+        addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 0.1, 5000));
+        addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 1, 7000));
+
+
 
     }
 }
