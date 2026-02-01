@@ -27,7 +27,7 @@ public class AltBootKickAction implements IAction{
 
     @Override
     public boolean iterate() {
-        intakeController.bootKickAlt(position);
+        //intakeController.bootKickAlt(position);
         telemetry.addLine("running BootKickAlt");
         iterates++;
         return false;

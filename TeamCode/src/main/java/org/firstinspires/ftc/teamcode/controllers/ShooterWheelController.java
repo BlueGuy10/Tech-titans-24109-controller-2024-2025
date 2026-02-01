@@ -25,6 +25,10 @@ public class ShooterWheelController {
         shooterWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
+    public void runWithoutEncoders() {
+        shooterWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     public void runWithEncoders() {
         shooterWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }

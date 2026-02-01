@@ -3,13 +3,12 @@ package org.firstinspires.ftc.teamcode.actions;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.controllers.IntakeController;
 
-public class BootKickAction implements IAction {
-    int iterates = 0;
+public class GateAction implements IAction {
     private final IntakeController intakeController;
     private final Telemetry telemetry;
     private final double position;
 
-    public BootKickAction(IntakeController intakeController, Telemetry telemetry, double position) {
+    public GateAction(IntakeController intakeController, Telemetry telemetry, double position) {
         this.intakeController = intakeController;
         this.telemetry = telemetry;
         this.position = position;
@@ -27,15 +26,14 @@ public class BootKickAction implements IAction {
 
         @Override
         public boolean iterate () {
-            intakeController.bootKick(position);
+            intakeController.setGate(position);
             telemetry.addLine("running bootkick");
-            iterates++;
             return true;
         }
 
         @Override
         public boolean isFinished () {
-            if (iterates >= 50000) {
+            if (intakeController.getServoPos() == position) {
                 return true;
             } else {
                 telemetry.update();

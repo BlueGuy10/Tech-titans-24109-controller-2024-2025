@@ -69,6 +69,10 @@ public class DecodeAprilTagDetector implements IDecodeAprilTagDetector {
 
     @Override
     public double getDistance() {
+        List<AprilTagDetection> aprilTags = aprilTagDetector.getAprilTags();
+        for (AprilTagDetection aprilTag : aprilTags) {
+            return aprilTag.ftcPose.range;
+        }
         return 0;
     }
 

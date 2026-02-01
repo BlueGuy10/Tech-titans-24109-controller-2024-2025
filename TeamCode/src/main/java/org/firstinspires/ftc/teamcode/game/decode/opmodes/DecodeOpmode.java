@@ -4,9 +4,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
 import org.firstinspires.ftc.teamcode.ExtendableOpmode;
 import org.firstinspires.ftc.teamcode.Jonah.ImuUtility;
 import org.firstinspires.ftc.teamcode.Jonathan.MecanumWheelsController;
-import org.firstinspires.ftc.teamcode.Jonathan.autodriving.Motor;
 import org.firstinspires.ftc.teamcode.actions.AltBootKickAction;
-import org.firstinspires.ftc.teamcode.actions.BootKickAction;
+import org.firstinspires.ftc.teamcode.actions.GateAction;
 import org.firstinspires.ftc.teamcode.actions.IAction;
 import org.firstinspires.ftc.teamcode.actions.IntakeAction;
 import org.firstinspires.ftc.teamcode.actions.MotorAction;
@@ -93,7 +92,7 @@ public abstract class DecodeOpmode extends ExtendableOpmode {
     }
 
     protected void addShootAction(CameraName camera) {
-        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1, new AprilTagDetector(camera), robot.getAlliance()));addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, -0.5));//open
+        addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 1, new AprilTagDetector(camera), robot.getAlliance()));addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, -0.5));//open
         addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.9));// up
         addAutoAction(new AltBootKickAction(new IntakeController(hardwareMap), telemetry, 0.6));//down
         addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));//intake
@@ -103,7 +102,7 @@ public abstract class DecodeOpmode extends ExtendableOpmode {
         addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.75));//intake
         addAutoAction(new TimeWaitAction(2000));
         addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
-        addAutoAction(new BootKickAction(new IntakeController(hardwareMap), telemetry, 0.4));//close
+        addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, 0.4));//close
         addAutoAction(new ShooterAction(telemetry, new ShooterWheelController(hardwareMap), 0, new AprilTagDetector(camera), robot.getAlliance()));
     }
 
