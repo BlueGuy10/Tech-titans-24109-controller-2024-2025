@@ -42,13 +42,18 @@ public class StrafeAction implements IAction {
     @Override
     public boolean iterate() {
         double currentDistance = wheels.getDistance()* STRAFE_LOSS_FACTOR;
-        double remainingDistance = targetDistance - currentDistance;
-
+        double remainingDistance;
+        if (targetDistance <0) {
+            remainingDistance = targetDistance + currentDistance;
+        } else {
+            remainingDistance = targetDistance - currentDistance;
+        }
         double powerValue = pidController.calculatePower(remainingDistance) * -1;
         wheels.autoDrive(powerValue, -powerValue, -powerValue, powerValue);
         telemetry.addData("power", powerValue);
         telemetry.addData("current distance", currentDistance);
         telemetry.addData("remaining distance", remainingDistance);
+        telemetry.update();
         return !isFinished();
     }
 
@@ -56,12 +61,18 @@ public class StrafeAction implements IAction {
     public boolean isFinished() {
         double currentDistance = wheels.getDistance() * STRAFE_LOSS_FACTOR;
         double remainingDistance = targetDistance - currentDistance;
+        if (targetDistance <0) {
+            remainingDistance = targetDistance + currentDistance;
+        } else {
+            remainingDistance = targetDistance - currentDistance;
+        }
         if (Math.abs(remainingDistance) < MOVEMENT_ERROR) {
             wheels.autoDrive(0, 0, 0, 0);
             telemetry.addLine("stopped");
-            isFinished = true;
+            return true;
+        } else {
+            return false;
         }
-        return isFinished;
     }
 
     @Override

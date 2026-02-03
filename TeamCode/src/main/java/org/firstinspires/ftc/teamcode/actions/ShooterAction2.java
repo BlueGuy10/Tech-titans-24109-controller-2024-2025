@@ -13,22 +13,18 @@ import org.firstinspires.ftc.teamcode.sensor.apriltag.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.sensor.apriltag.DecodeAprilTagDetector;
 
 public class ShooterAction2 implements IAction {
-    private ElapsedTime elapsedTime;
     private final ShooterWheelController shooterWheelController;
     private final JoinedTelemetry telemetry;
     private final double targetRPM;
-    private boolean isFinished = false;
-    private final int maxTime;
     private final PidController pidController;
     private final AprilTagDetector aprilTagDetector;
     private final Alliance alliance;
     private final DecodeAprilTagDetector decodeAprilTagDetector;
 
-    public ShooterAction2(ShooterWheelController shooterWheelController, Telemetry telemetry, double targetRPM, int maxTime, AprilTagDetector aprilTagDetector, Alliance alliance) {
+    public ShooterAction2(ShooterWheelController shooterWheelController, Telemetry telemetry, double targetRPM, AprilTagDetector aprilTagDetector, Alliance alliance) {
         this.shooterWheelController = shooterWheelController;
         this.telemetry = new JoinedTelemetry(PanelsTelemetry.INSTANCE.getFtcTelemetry(), telemetry);
         this.targetRPM = targetRPM;
-        this.maxTime = maxTime;
         this.aprilTagDetector = aprilTagDetector;
         this.alliance = alliance;
         this.pidController = new PidController(0.03, 0, 0.01, new TimeService());
@@ -39,7 +35,6 @@ public class ShooterAction2 implements IAction {
     public boolean init() {
       //  shooterWheelController.resetEncoders();
         shooterWheelController.runWithoutEncoders();
-        elapsedTime = new ElapsedTime();
         return isInitialized();
     }
 
@@ -50,14 +45,10 @@ public class ShooterAction2 implements IAction {
 
     @Override
     public boolean iterate() {
-        if (elapsedTime.milliseconds() >= maxTime) {
-            isFinished = true;
-            return true;
-        } else {
             double distanceFromNet = decodeAprilTagDetector.getDistance();
             double targetRPM2 = distanceFromNet * 49.19; //cm * revolutions per cm, no base for 0 dist (still needs rpm)
             double currentRPM = shooterWheelController.getRPM();
-            double remainingRPM = targetRPM2 - currentRPM;
+            double remainingRPM = targetRPM - currentRPM;
             double power = pidController.calculatePower(remainingRPM);
             shooterWheelController.spinWheel(power);
             telemetry.addData("Power", power);
@@ -69,14 +60,12 @@ public class ShooterAction2 implements IAction {
             telemetry.addData("Motor Name", shooterWheelController.getMotorName());
             telemetry.addData("distance", distanceFromNet); //cm
             telemetry.update();
-            isFinished = false;
-            return false;
+            return true;
         }
-    }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return false;
     }
 
     @Override
