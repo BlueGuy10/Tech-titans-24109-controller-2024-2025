@@ -42,13 +42,16 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
         robot.setStartPosition(START_POS);
         robot.setAlliance(ALLIANCE);
         // create autonomous actions
-            //addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, 0));
+            addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, 0.3));
             addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ?  195 : 180));
-            //addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 6000, aprilTagDetector, Alliance.RED));//shooter spinup
+            addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 6000, aprilTagDetector, Alliance.RED));//shooter spinup
             addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
             addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, 45));
-            addAutoAction(new TimeWaitAction(500));//shoot 3 balls
-            //addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 6000, aprilTagDetector, Alliance.RED));//turn off shooter
+            addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, 0));
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+            addAutoAction(new TimeWaitAction(5000));//shoot 3 balls
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.3));
+            addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 0, aprilTagDetector, Alliance.RED));//turn off shooter
             addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
             addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ? 25 : -25));
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
@@ -56,10 +59,13 @@ public class AutoTest_1_OpMode extends DecodeOpmode {
             addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
             addAutoAction(new MotorAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, -70));
             addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ? -25 : 25));
-            //addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 6000, aprilTagDetector, Alliance.RED));//shooter spinup
+            addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 6000, aprilTagDetector, Alliance.RED));//shooter spinup
             addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? 45 : -45, new MecanumWheelsController(hardwareMap), telemetry));
-            addAutoAction(new TimeWaitAction(500));//shoot 3 balls
-            //addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 6000, aprilTagDetector, Alliance.RED));//turn off shooter
+            addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, 0));
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+            addAutoAction(new TimeWaitAction(5000));//shoot 3 balls
+            addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0));
+            addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 0, aprilTagDetector, Alliance.RED));//turn off shooter
             addAutoAction(new TurnAction(imuCalculator, (robot.getAlliance() == Alliance.RED) ? -45 : 45, new MecanumWheelsController(hardwareMap), telemetry));
             addAutoAction(new StrafeAction(imuCalculator, new MecanumWheelsController(hardwareMap), telemetry, (robot.getAlliance() == Alliance.RED) ? 25 : -25));
     }

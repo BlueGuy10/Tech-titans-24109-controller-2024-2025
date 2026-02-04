@@ -12,7 +12,7 @@ public class IntakeController{
 
     public IntakeController (HardwareMap hardwareMap) {
         intakeWheel = hardwareMap.get(DcMotor.class, "Intake");
-        gate = hardwareMap.get(Servo.class, "Gate");
+        gate = hardwareMap.get(Servo.class, "Gate1");
         intakeWheel.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 

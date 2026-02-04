@@ -30,7 +30,7 @@ public class TurnAction implements IAction {
         this.targetAngle = 0;
         this.wheels = wheels;
         this.telemetry = telemetry;
-        this.pidController = new PidController(0.03, 0, 0.01, new TimeService());
+        this.pidController = new PidController(0.02, 0, 0.01, new TimeService());
     }
 
     @Override
@@ -50,9 +50,14 @@ public class TurnAction implements IAction {
     @Override
     public boolean iterate() {
         double currentAngle = imuCalculator.getCurrentAngle();
-        double remainingAngle = targetAngle - currentAngle;
+        double remainingAngle;
+        if (targetAngle <0) {
+            remainingAngle = targetAngle + currentAngle;
+        } else {
+            remainingAngle = targetAngle - currentAngle;
+        }
 
-        double powerValue = pidController.calculatePower(remainingAngle);
+        double powerValue = pidController.calculatePower(remainingAngle) * 0.6;
         double leftPower = powerValue;
         double rightPower = -powerValue;
         wheels.autoDrive(leftPower, leftPower, rightPower, rightPower);
@@ -72,7 +77,12 @@ public class TurnAction implements IAction {
         }
 
         double currentAngle = imuCalculator.getCurrentAngle();
-        double remainingAngle = targetAngle - currentAngle;
+        double remainingAngle;
+        if (targetAngle <0) {
+            remainingAngle = targetAngle + currentAngle;
+        } else {
+            remainingAngle = targetAngle - currentAngle;
+        }
 
         if (Math.abs(remainingAngle) < ANGLE_ERROR) {
             wheels.autoDrive(0, 0, 0, 0);

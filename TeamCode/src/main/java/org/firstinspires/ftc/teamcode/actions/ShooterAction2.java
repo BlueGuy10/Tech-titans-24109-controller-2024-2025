@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.sensor.apriltag.AprilTagDetector;
 import org.firstinspires.ftc.teamcode.sensor.apriltag.DecodeAprilTagDetector;
 
 public class ShooterAction2 implements IAction {
+    boolean isFinished = false;
     private final ShooterWheelController shooterWheelController;
     private final JoinedTelemetry telemetry;
     private final double targetRPM;
@@ -35,7 +36,8 @@ public class ShooterAction2 implements IAction {
     public boolean init() {
       //  shooterWheelController.resetEncoders();
         shooterWheelController.runWithoutEncoders();
-        return isInitialized();
+        return true;
+
     }
 
     @Override
@@ -60,12 +62,13 @@ public class ShooterAction2 implements IAction {
             telemetry.addData("Motor Name", shooterWheelController.getMotorName());
             telemetry.addData("distance", distanceFromNet); //cm
             telemetry.update();
+            isFinished = true;
             return true;
         }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return isFinished;
     }
 
     @Override

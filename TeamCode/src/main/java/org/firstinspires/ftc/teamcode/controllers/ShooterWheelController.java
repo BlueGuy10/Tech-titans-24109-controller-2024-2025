@@ -18,7 +18,6 @@ public class ShooterWheelController {
 
     public ShooterWheelController(HardwareMap hardwareMap) {
         shooterWheel = hardwareMap.get(DcMotorEx.class, "Shooter");
-        shooterWheel.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void resetEncoders() {

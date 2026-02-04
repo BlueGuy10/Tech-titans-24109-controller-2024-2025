@@ -31,20 +31,21 @@ public class Match_1_Opmode extends DecodeOpmode {
     private static final Pose2D START_POS = new Pose2D(DistanceUnit.CM, 0, 0, AngleUnit.DEGREES, 0);
     private static final Alliance ALLIANCE = Alliance.RED;
 
-
     @Override
     protected void createMatch() {
-        IMU imu = hardwareMap.get(IMU.class, "imu");
-        ImuUtility imuCalculator = new ImuUtility(imu);
         CameraName camera = hardwareMap.get(WebcamName.class, "Webcam 1");
+        AprilTagDetector aprilTagDetector = new AprilTagDetector(camera);
 
         DecodeRobot robot = getRobot();
         robot.setStartPosition(START_POS);
         robot.setAlliance(ALLIANCE);
         // create autonomous actions
-        addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, -1));
+        addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 6000, aprilTagDetector, Alliance.RED));
+        addAutoAction(new TimeWaitAction(3000));
         addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, 0));
-        addAutoAction(new GateAction(new IntakeController(hardwareMap), telemetry, 1));
-        //addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 3000, 5000, new AprilTagDetector(camera), robot.getAlliance()));
+        addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 1));
+        addAutoAction(new TimeWaitAction(5000));//shoot 3 balls
+        addAutoAction(new IntakeAction(new IntakeController(hardwareMap), telemetry, 0.3));
+        addAutoAction(new ShooterAction2(new ShooterWheelController(hardwareMap), telemetry, 0, aprilTagDetector, Alliance.RED));//turn off shooter
     }
 }
